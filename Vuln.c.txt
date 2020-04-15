@@ -1,0 +1,22 @@
+/* This program has a buffer overflow vulnerability */
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+int myfunc(char *str)
+{
+    char buffer[12];
+    strcpy(buffer,str);
+    printf("Saved str to buffer, returning.\n");
+    return 1;
+}
+int main(int argc, char **argv)
+{
+    printf("This is %s: a vulnerable program.\n\n", argv[0]);
+    if (argc < 2) {
+        printf("Usage: %s <argument>\n", argv[0]);
+        return 1;
+    }
+    myfunc(argv[1]);
+    printf("Returned properly. Exiting.\n");
+    return 1;
+}
